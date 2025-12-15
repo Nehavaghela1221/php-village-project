@@ -1,49 +1,5 @@
 <?php
 require 'config/db.php';
-if(isset($_POST['update_member'])){
-
-    // photo upload logic (tamaro same rehse)
-    $photo_path = $member['photo'];
-    if(!empty($_FILES['photo']['name'])){
-        $target_dir="uploads/";
-        $photo_name=time().'_'.basename($_FILES['photo']['name']);
-        $target_file=$target_dir.$photo_name;
-        if(move_uploaded_file($_FILES['photo']['tmp_name'],$target_file)){
-            $photo_path = $photo_name;
-        }
-    }
-
-    // pending data store
-    $data = [
-        'full_name'=>$_POST['full_name'],
-        'dob'=>$_POST['dob'],
-        'address'=>$_POST['address'],
-        'area'=>$_POST['area'],
-        'city'=>$_POST['city'],
-        'phone'=>$_POST['phone'],
-        'shakh'=>$_POST['shakh'],
-        'samaj'=>$_POST['samaj'],
-        'family_no'=>$_POST['family_no'],
-        'marriage_status'=>$_POST['marriage_status'],
-        'occupation'=>$_POST['occupation'],
-        'business_address'=>$_POST['business_address'],
-        'status'=>$_POST['status'],
-        'photo'=>$photo_path
-    ];
-
-    $json = json_encode($data);
-
-    $stmt = $conn->prepare("
-        UPDATE members 
-        SET pending_data=?, update_status='pending' 
-        WHERE serial_no=?
-    ");
-    $stmt->bind_param("ss",$json,$serial_no);
-    $stmt->execute();
-
-    echo "<p style='color:orange'>Update request sent to admin</p>";
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -52,33 +8,57 @@ if(isset($_POST['update_member'])){
 <meta charset="utf-8">
 <title>Members List</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 <link href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css" rel="stylesheet">
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
 
+<style>
+.pin-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+.pin-modal{
+  background:#fff;
+  padding:25px;
+  border-radius:10px;
+  width:320px;
+  text-align:center;
+}
+</style>
 </head>
+
 <body>
 
 <div class="container my-5">
-  <h3 class="mb-4 text-primary fw-bold">Members List</h3>
 
-  <div class="table-responsive shadow-sm rounded p-3 bg-white">
-    <table id="membersTable" class="table table-striped table-bordered align-middle mb-0">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold text-primary mb-0">Members List</h3>
+    <button class="btn btn-success" onclick="openPinModal()">
+      <i class="bi bi-person-plus-fill"></i> Add Member
+    </button>
+  </div>
+
+  <div class="table-responsive shadow rounded bg-white p-3">
+    <table id="membersTable" class="table table-bordered table-striped align-middle">
       <thead class="table-dark">
         <tr>
           <th>Serial No</th>
@@ -88,127 +68,148 @@ if(isset($_POST['update_member'])){
           <th>City</th>
           <th>Phone</th>
           <th>Shakh</th>
+          <th>Status</th>
           <th>Action</th>
         </tr>
       </thead>
       <tbody>
-        <?php
-        $res = $conn->query("SELECT * FROM members ORDER BY id DESC");
-        while($row = $res->fetch_assoc()):
-        ?>
-        <tr>
-          <td class="py-3"><?= $row['serial_no'] ?></td>
-          <td class="text-center py-3">
-            <img src="uploads/<?= $row['photo'] ?>" class="rounded-circle" style="width:50px; height:50px;" alt="Photo">
-          </td>
-          <td class="py-3"><?= $row['full_name'] ?></td>
-          <td class="py-3"><?= $row['area'] ?></td>
-          <td class="py-3"><?= $row['city'] ?></td>
-          <td class="py-3"><?= $row['phone'] ?></td>
-          <td class="py-3"><?= $row['shakh'] ?></td>
-          <td class="py-3">
-            <a href="member_details.php?id=<?= $row['id'] ?>" class="btn btn-info btn-sm me-1">
-              <i class="bi bi-eye"></i> Details
-            </a>
-          <button 
-  class="btn btn-warning btn-sm"
-  onclick="openDobModal('<?= $row['serial_no'] ?>')">
-  <i class="bi bi-pencil-square"></i> Edit
-</button>
 
+<?php
+$res = $conn->query("SELECT * FROM members ORDER BY id DESC");
+while($row = $res->fetch_assoc()):
+?>
 
-          </td>
-        </tr>
-        <?php endwhile; ?>
+<tr>
+  <td><?= htmlspecialchars($row['serial_no']) ?></td>
+
+  <td class="text-center">
+    <img src="uploads/<?= $row['photo'] ?: 'no-user.png' ?>"
+         class="rounded-circle"
+         style="width:50px;height:50px;object-fit:cover;">
+  </td>
+
+  <td><?= htmlspecialchars($row['full_name']) ?></td>
+  <td><?= htmlspecialchars($row['area']) ?></td>
+  <td><?= htmlspecialchars($row['city']) ?></td>
+  <td><?= htmlspecialchars($row['phone']) ?></td>
+  <td><?= htmlspecialchars($row['shakh']) ?></td>
+
+  <!-- STATUS -->
+<td class="text-center">
+<?php
+  if($row['update_status'] === 'pending'){
+    echo "<span class='badge bg-warning text-dark'>Pending</span>";
+  }elseif($row['update_status'] === 'rejected'){
+    echo "<span class='badge bg-danger'>Rejected</span>";
+  }else{
+    echo "<span class='badge bg-success'>Approved</span>";
+  }
+?>
+</td>
+
+  <!-- ACTION -->
+  <td class="text-center">
+
+    <!-- VIEW always -->
+    <a href="member_details.php?id=<?= $row['id'] ?>" 
+       class="btn btn-info btn-sm">
+      <i class="bi bi-eye"></i>
+    </a>
+
+    <!-- EDIT only when NOT pending -->
+    <?php if($row['update_status'] !== 'pending'): ?>
+      <button class="btn btn-warning btn-sm"
+              onclick="openDobModal('<?= $row['serial_no'] ?>')">
+        <i class="bi bi-pencil-square"></i>
+      </button>
+    <?php endif; ?>
+
+  </td>
+</tr>
+
+<?php endwhile; ?>
       </tbody>
     </table>
   </div>
 </div>
-<!-- DOB VERIFY MODAL -->
-<div class="modal fade" id="dobModal" tabindex="-1">
+
+<!-- ================= PIN MODAL ================= -->
+<div id="pinOverlay" class="pin-overlay">
+  <div class="pin-modal">
+    <h5>Admin PIN</h5>
+    <input type="password" id="adminPin" class="form-control my-2">
+    <button class="btn btn-success w-100" onclick="verifyPin()">Verify</button>
+    <p id="pinError" class="text-danger mt-2"></p>
+  </div>
+</div>
+
+<!-- ================= DOB MODAL ================= -->
+<div class="modal fade" id="dobModal">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-
       <div class="modal-header bg-warning">
-        <h5 class="modal-title">
-          <i class="bi bi-shield-lock"></i> Verify Birthdate
-        </h5>
+        <h5 class="modal-title">Verify DOB</h5>
       </div>
-
-      <div class="modal-body text-center">
+      <div class="modal-body">
         <input type="hidden" id="serial_no">
-        <label class="form-label">Enter Birthdate</label>
-        <input type="date" id="dob" class="form-control" required>
-        <div id="dobError" class="text-danger mt-2 d-none">
-          Birthdate does not match!
-        </div>
+        <input type="date" id="dob" class="form-control">
+        <div id="dobError" class="text-danger mt-2 d-none">DOB does not match</div>
       </div>
-
-      <div class="modal-footer justify-content-center">
+      <div class="modal-footer">
         <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
         <button class="btn btn-warning" onclick="verifyDob()">Verify</button>
       </div>
-
     </div>
   </div>
 </div>
+
 <script>
+function openPinModal(){
+  document.getElementById('pinOverlay').style.display='flex';
+}
+function verifyPin(){
+  fetch("admin/verify-pin.php",{
+    method:"POST",
+    headers:{"Content-Type":"application/x-www-form-urlencoded"},
+    body:"pin="+adminPin.value
+  })
+  .then(r=>r.text())
+  .then(res=>{
+    if(res.trim()==="success"){
+      location.href="add_member.php";
+    }else{
+      pinError.innerText="Wrong PIN";
+    }
+  });
+}
+
 function openDobModal(serial){
-  document.getElementById('serial_no').value = serial;
-  document.getElementById('dob').value = '';
-  document.getElementById('dobError').classList.add('d-none');
+  document.getElementById('serial_no').value=serial;
   new bootstrap.Modal(document.getElementById('dobModal')).show();
 }
 
 function verifyDob(){
-  let serial = document.getElementById('serial_no').value;
-  let dob = document.getElementById('dob').value;
-
-  if(!dob){
-    alert("Please enter birthdate");
-    return;
-  }
-
-  fetch('verify_dob.php', {
-    method: 'POST',
-    headers: {'Content-Type':'application/x-www-form-urlencoded'},
-    body: `serial_no=${serial}&dob=${dob}`
+  fetch("verify_dob.php",{
+    method:"POST",
+    headers:{"Content-Type":"application/x-www-form-urlencoded"},
+    body:`serial_no=${serial_no.value}&dob=${dob.value}`
   })
-  .then(res => res.text())
-  .then(resp => {
-    if(resp === 'success'){
-      window.location.href = "edit_member.php?serial_no=" + serial;
+  .then(r=>r.text())
+  .then(res=>{
+    if(res.trim()==="success"){
+      location.href="edit_member.php?serial_no="+serial_no.value;
     }else{
-      document.getElementById('dobError').classList.remove('d-none');
+      dobError.classList.remove('d-none');
     }
   });
 }
-</script>
 
-<script>
-$(document).ready(function() {
-    $('#membersTable').DataTable({
-        responsive: true,
-        pageLength: 10,
-        lengthMenu: [5, 10, 25, 50],
-        dom: "<'row mb-3'<'col-sm-6 d-flex align-items-center'l>" +
-             "<'col-sm-6 d-flex justify-content-end align-items-center'B'f ms-3>>" +
-             "<'row'<'col-sm-12'tr>>" +
-             "<'row mt-3'<'col-sm-5'i><'col-sm-7'p>>",
-        buttons: [
-            {
-                extend: 'collection',
-                text: '<i class="bi bi-download"></i> Export',
-                className: 'btn btn-primary btn-sm me-3 mt-1',
-                buttons: [
-                    { extend: 'excelHtml5', text: 'Excel' },
-                    { extend: 'pdfHtml5', text: 'PDF' },
-                    { extend: 'csvHtml5', text: 'CSV' },
-                    { extend: 'print', text: 'Print' }
-                ]
-            }
-        ]
-    });
+$(function(){
+  $('#membersTable').DataTable({
+    pageLength:10,
+    buttons:['excel','pdf','csv','print'],
+    dom:"<'row mb-3'<'col-sm-6'l><'col-sm-6 text-end'Bf>>tr<'row mt-3'<'col-sm-5'i><'col-sm-7'p>>"
+  });
 });
 </script>
 

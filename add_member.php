@@ -1,4 +1,6 @@
 <?php
+
+require 'admin/auth.php'; 
 require 'config/db.php';
 $msg = "";
 
@@ -145,6 +147,14 @@ body{
 </head>
 
 <body>
+ <!-- NAVBAR -->
+  <div class="admin-navbar">
+    <div class="admin-navbar-inner">
+      <h2 style="    color: #f0ab0a;
+">📸 Gallery Admin</h2>
+      <a href="admin/logout.php" class="exit-btn">Exit Admin</a>
+    </div>
+  </div>
 
 <div class="container my-5">
 <div class="card shadow-lg">
