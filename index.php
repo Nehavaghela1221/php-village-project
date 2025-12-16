@@ -26,6 +26,7 @@ $notificationCount = $conn->query("
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<<<<<<< HEAD
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Village Dashboard</title>
@@ -226,14 +227,209 @@ $notificationCount = $conn->query("
         </a>
       </div>
 
+=======
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Devinapura | Dashboard</title>
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #FFF8E1; /* village cream */
+      color: #4E342E;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      height: 600px;
+      background: url("uploads/home.jpg") center top / cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 248, 225, 0.55);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-content h1 {
+      font-size: 42px;
+      font-weight: 700;
+      color: #6A1B9A;
+    }
+
+    .hero-content p {
+      font-size: 16px;
+      margin-top: 6px;
+      color: #4E342E;
+    }
+
+    /* ===== DASHBOARD ===== */
+    .dashboard-section {
+      padding: 60px 0;
+    }
+
+    .dashboard-card {
+      background: #FFFFFF;
+      border-radius: 16px;
+      padding: 25px 15px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      height: 100%;
+    }
+
+    /* Hover only for desktop */
+    @media (hover: hover) {
+      .dashboard-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 35px rgba(0,0,0,0.15);
+      }
+    }
+
+    .icon-circle {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #F0AB0A, #D37810);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin: 0 auto 15px;
+    }
+
+    .dashboard-card h4 {
+      font-size: 34px;
+      font-weight: 700;
+      color: #F0AB0A;
+      margin-bottom: 4px;
+    }
+
+    .dashboard-card span {
+      font-size: 14px;
+      color: #6D4C41;
+    }
+
+    a.dashboard-link {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ===== MOBILE OPTIMIZATION ===== */
+    @media (max-width: 768px) {
+      .hero {
+        height: 420px;
+      }
+
+      .hero-content h1 {
+        font-size: 30px;
+      }
+
+      .dashboard-section {
+        padding: 40px 0;
+      }
+
+      /* Disable animation on mobile */
+      [data-aos] {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<?php include 'header.php'; ?>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Village Dashboard</h1>
+      <p>Devinapura Digital Village Management System</p>
     </div>
-  </div>
-</section>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section class="dashboard-section">
+    <div class="container">
+      <div class="row g-4">
+
+        <div class="col-6 col-lg-3">
+          <a href="family-members.php" class="dashboard-link">
+            <div class="dashboard-card">
+              <div class="icon-circle"><i class="bi bi-house-fill"></i></div>
+              <h4>19</h4>
+              <span>Families</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-6 col-lg-3">
+          <a href="member-list.php" class="dashboard-link">
+            <div class="dashboard-card">
+              <div class="icon-circle"><i class="bi bi-people-fill"></i></div>
+              <h4>96</h4>
+              <span>Members</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-6 col-lg-3">
+          <a href="announcements.php" class="dashboard-link">
+            <div class="dashboard-card">
+              <div class="icon-circle"><i class="bi bi-megaphone-fill"></i></div>
+              <h4>12</h4>
+              <span>Announcements</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-6 col-lg-3">
+          <a href="notifications.php" class="dashboard-link">
+            <div class="dashboard-card">
+              <div class="icon-circle"><i class="bi bi-bell-fill"></i></div>
+              <h4>5</h4>
+              <span>Notifications</span>
+            </div>
+          </a>
+        </div>
+
+      </div>
+>>>>>>> b2fbef5 (Updated index.php)
+    </div>
+  </section>
 
 </main>
 
 <?php include 'footer.php'; ?>
 
+<<<<<<< HEAD
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="assets/vendor/aos/aos.js"></script>
 <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
@@ -249,3 +445,18 @@ $notificationCount = $conn->query("
 
 </body>
 </html>
+=======
+<!-- JS -->
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/aos/aos.js"></script>
+
+<script>
+  // Disable AOS on mobile
+  if (window.innerWidth > 768) {
+    AOS.init({ duration: 700, once: true });
+  }
+</script>
+
+</body>
+</html>
+>>>>>>> b2fbef5 (Updated index.php)
