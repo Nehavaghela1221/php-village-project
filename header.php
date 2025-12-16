@@ -43,7 +43,6 @@
       <ul>
         <li><a href="/devinapura/index.php">Dashboard</a></li>
         <li><a href="/devinapura/members_list.php">Members List</a></li>
-        <li><a href="/devinapura/family.php">Family List</a></li>
         <li><a href="/devinapura/gallery.php">Gallery</a></li>
 
         <li class="dropdown">

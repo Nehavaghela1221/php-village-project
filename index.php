@@ -244,23 +244,34 @@ section#pricing a {
          data-aos="fade-up"
          data-aos-delay="200">
 
-        <div class="pricing-item featured ">
-         <div class="icon-circle"><i class="bi bi-people-fill"></i></div>
+        <div class="pricing-item featured">
+          <div class="icon-circle">
+            <i class="bi bi-people-fill"></i>
+          </div>
+
           <h4>19</h4>
+
+          <p class="text-muted mb-0">Family Members</p>
         </div>
+
 
       </a>
       <!-- End -->
 
       <!-- Member List -->
-      <a href="member-list.php"
+      <a href="members_list.php"
          class="col-6 col-xl-3 col-lg-6 text-decoration-none"
          data-aos="fade-up"
          data-aos-delay="200">
 
         <div class="pricing-item featured">
-        <div class="icon-circle"><i class="bi bi-people-fill"></i></div>
+          <div class="icon-circle">
+            <i class="bi bi-people-fill"></i>
+          </div>
+
           <h4>19</h4>
+
+          <p class="text-muted mb-0"> Members List</p>
         </div>
 
       </a>
@@ -276,6 +287,7 @@ section#pricing a {
          <div class="icon-circle"> <i class="bi bi-megaphone-fill"></i></div>
 
           <h4>19</h4>
+           <p class="text-muted mb-0">Annocuments</p>
         </div>
 
       </a>
@@ -291,6 +303,36 @@ section#pricing a {
           <div class="icon-circle"> <i class="bi bi-bell-fill"></i></div>
 
           <h4>19</h4>
+           <p class="text-muted mb-0">Notifications</p>
+        </div>
+
+      </a>
+
+       <!-- Notifications -->
+      <a href="contact.php"
+         class="col-6 col-xl-3 col-lg-6 text-decoration-none"
+         data-aos="fade-up"
+         data-aos-delay="200">
+
+        <div class="pricing-item featured">
+          <div class="icon-circle"> <i class="bi bi-bell-fill"></i></div>
+
+          <h4>19</h4>
+           <p class="text-muted mb-0">Contact Us</p>
+        </div>
+
+      </a>
+
+      <a href="Members_Directory.php"
+         class="col-6 col-xl-3 col-lg-6 text-decoration-none"
+         data-aos="fade-up"
+         data-aos-delay="200">
+
+        <div class="pricing-item featured">
+          <div class="icon-circle"> <i class="bi bi-bell-fill"></i></div>
+
+          <h4>19</h4>
+           <p class="text-muted mb-0">Members Directory</p>
         </div>
 
       </a>

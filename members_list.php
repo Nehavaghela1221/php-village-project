@@ -14,6 +14,8 @@ require 'config/db.php';
 
 <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 <link href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css">
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -96,14 +98,18 @@ while($row = $res->fetch_assoc()):
 
   <!-- STATUS -->
 <td class="text-center">
+  
 <?php
-  if($row['update_status'] === 'pending'){
+
+if ($row['update_status'] === 'pending') {
     echo "<span class='badge bg-warning text-dark'>Pending</span>";
-  }elseif($row['update_status'] === 'rejected'){
-    echo "<span class='badge bg-danger'>Rejected</span>";
-  }else{
+}
+elseif ($row['update_status'] === 'approved') {
     echo "<span class='badge bg-success'>Approved</span>";
-  }
+}
+else {
+    echo "<span class='badge bg-danger'>Rejected</span>";
+}
 ?>
 </td>
 
@@ -115,7 +121,6 @@ while($row = $res->fetch_assoc()):
        class="btn btn-info btn-sm">
       <i class="bi bi-eye"></i>
     </a>
-
     <!-- EDIT only when NOT pending -->
     <?php if($row['update_status'] !== 'pending'): ?>
       <button class="btn btn-warning btn-sm"
@@ -212,6 +217,30 @@ $(function(){
   });
 });
 </script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- DataTables core -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+<!-- DataTables Buttons -->
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
+
+<!-- 🔥 REQUIRED FOR EXCEL -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<!-- 🔥 REQUIRED FOR PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+
+<!-- Buttons -->
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
 
 </body>
 </html>

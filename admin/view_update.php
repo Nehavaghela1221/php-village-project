@@ -1,6 +1,8 @@
 <?php
 require '../config/db.php';
 
+
+
 /* ================= SERIAL ================= */
 $serial_no = $_GET['serial_no'] ?? '';
 if ($serial_no == '') die("Invalid Request");
@@ -93,9 +95,8 @@ $newData = json_decode($member['pending_data'], true);
         ✅ Approve Update
     </a>
 
-    <a class="btn reject" href="reject_update.php?serial_no=<?= $serial_no ?>">
-        ❌ Reject Update
-    </a>
+    <a class="btn reject" href="reject_update.php?serial_no=<?= $serial_no ?>">❌ Reject Update</a>
+
 
     <a class="btn back" href="update_requests.php">
         ⬅ Back

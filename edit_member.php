@@ -103,30 +103,7 @@ if(isset($_POST['add_family'])){
     header("Location: edit_member.php?serial_no=".$serial_no);
     exit;
 }
-/* ================= DELETE FAMILY MEMBER ================= */
-if(isset($_GET['delete_family']) && isset($_GET['fid'])){
 
-    $fid = (int)$_GET['fid'];
-
-    // delete photo (optional but good practice)
-    $p = $conn->prepare("SELECT photo FROM family_members WHERE id=?");
-    $p->bind_param("i",$fid);
-    $p->execute();
-    $photo = $p->get_result()->fetch_assoc();
-
-    if(!empty($photo['photo']) && file_exists("uploads/family/".$photo['photo'])){
-        unlink("uploads/family/".$photo['photo']);
-    }
-
-    // delete record
-    $d = $conn->prepare("DELETE FROM family_members WHERE id=?");
-    $d->bind_param("i",$fid);
-    $d->execute();
-
-    // redirect (avoid repeat delete)
-    header("Location: edit_member.php?serial_no=".$serial_no);
-    exit;
-}
 
 
 
@@ -241,7 +218,7 @@ value="<?= htmlspecialchars($member['occupation']) ?>">
 </div>
 
 </div>
-
+  
 <div class="text-center mt-4">
 <button type="submit" name="update_member" class="btn btn-warning px-5 fw-bold">
 Send Update Request
@@ -309,6 +286,8 @@ Send Update Request
           <input type="text" name="city" class="form-control" placeholder="City">
 
         </div>
+      
+
 
         <div class="modal-footer">
           <button type="submit" name="add_family" class="btn btn-success">
@@ -322,53 +301,6 @@ Send Update Request
   </div>
 </div>
 
-<!-- ================= FAMILY MEMBERS (DISPLAY ONLY) ================= -->
-<?php if($family->num_rows > 0): ?>
-<div class="card shadow mt-4">
-<div class="card-header bg-primary text-white fw-bold">
-<i class="bi bi-people-fill"></i> Family Members
-</div>
-
-<div class="card-body">
-<?php while($f = $family->fetch_assoc()): ?>
-
-<!-- ⚠️ KEEP YOUR OLD FAMILY LAYOUT HERE – ONLY DATA BINDED -->
-<div class="border rounded p-3 mb-3">
-
-<div class="row align-items-center">
-<div class="col-md-2 text-center">
-<img src="uploads/family/<?= $f['photo'] ?: 'no-user.png' ?>"
-style="width:80px;height:80px;border-radius:50%;object-fit:cover;">
-</div>
-
-<div class="col-md-10">
-<strong><?= htmlspecialchars($f['name']) ?></strong><br>
-Relation: <?= htmlspecialchars($f['relation']) ?><br>
-Age: <?= htmlspecialchars($f['age']) ?> |
-Gender: <?= htmlspecialchars($f['gender']) ?><br>
-Mobile: <?= htmlspecialchars($f['mobile']) ?><br>
-Profession: <?= htmlspecialchars($f['profession']) ?><br>
-Address: <?= htmlspecialchars($f['address']) ?>,
-<?= htmlspecialchars($f['area']) ?>,
-<?= htmlspecialchars($f['city']) ?>
-<a href="edit_member.php?serial_no=<?= $serial_no ?>&delete_family=1&fid=<?= $f['id'] ?>"
-   class="btn btn-sm btn-danger mt-2"
-   onclick="return confirm('Are you sure you want to delete this family member?');">
-   <i class="bi bi-trash"></i> Delete
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- END OLD FAMILY LAYOUT -->
-
-<?php endwhile; ?>
-</div>
-</div>
-<?php endif; ?>
 
 </div>
 
