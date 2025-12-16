@@ -98,17 +98,18 @@ while($row = $res->fetch_assoc()):
 
   <!-- STATUS -->
 <td class="text-center">
-  
 <?php
+$status = $row['update_status'];
 
-if ($row['update_status'] === 'pending') {
+if ($status === 'pending') {
     echo "<span class='badge bg-warning text-dark'>Pending</span>";
 }
-elseif ($row['update_status'] === 'approved') {
-    echo "<span class='badge bg-success'>Approved</span>";
+elseif ($status === 'rejected') {
+    echo "<span class='badge bg-danger'>Rejected</span>";
 }
 else {
-    echo "<span class='badge bg-danger'>Rejected</span>";
+    // approved OR empty OR null
+    echo "<span class='badge bg-success'>Approved</span>";
 }
 ?>
 </td>
