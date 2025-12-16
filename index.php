@@ -1,366 +1,217 @@
+<?php
+require 'config/db.php';
+
+/* ===== DASHBOARD COUNTS (FINAL) ===== */
+
+// Families
+$familyCount = $conn->query("
+  SELECT COUNT(*) FROM members
+")->fetch_row()[0];
+
+// Members
+$memberCount = $conn->query("
+  SELECT COUNT(*) FROM family_members
+")->fetch_row()[0];
+
+// Announcements
+$announcementCount = $conn->query("
+  SELECT COUNT(*) FROM announcements
+")->fetch_row()[0];
+
+// Admin Notifications
+$notificationCount = $conn->query("
+  SELECT COUNT(*) FROM admin_notifications
+")->fetch_row()[0];
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Starter Page - Mentor Bootstrap Template</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Village Dashboard</title>
 
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+<!-- Vendor CSS -->
+<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+<link href="assets/vendor/aos/aos.css" rel="stylesheet">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-    rel="stylesheet">
+<!-- Main CSS -->
+<link href="assets/css/main.css" rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-  <!-- Main CSS File -->
-  <link href="assets/css/main.css" rel="stylesheet">
-
-  <!-- =======================================================
-  * Template Name: Mentor
-  * Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
-  * Updated: Aug 07 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
-</head>
 <style>
-  /* ===== SLIDING SQUARE BORDER EFFECT ===== */
+/* ===== DASHBOARD CARD UI (FIXED) ===== */
+.pricing-item{
+  background:#fff;
+  border-radius:16px;
+  padding:20px 10px;
+  box-shadow:0 10px 25px rgba(0,0,0,.08);
+  transition:.35s;
+  position:relative;
+  overflow:hidden;
+}
+.pricing-item:hover{
+  transform:translateY(-8px);
+  box-shadow:0 18px 40px rgba(148,116,71,.15);
+}
+.pricing-item::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(240,171,10,.25),transparent);
+  opacity:0;
+  transition:.3s;
+}
+.pricing-item:hover::after{opacity:1}
 
-.pricing-item {
-  position: relative;
-  background: #fff;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.icon-circle{
+  width:60px;
+  height:60px;
+  margin:10px auto;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+  color:#fff;
+  background:linear-gradient(135deg,#f0ab0a,#d37810);
 }
 
-/* pseudo borders */
-.pricing-item::before,
-.pricing-item::after {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 0;
-  border: 2px solid transparent;
-  transition: all 0.4s ease;
+.pricing-item h4{
+  display:block !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  font-size:42px;
+  font-weight:700;
+  color:#f0ab0a;
+  text-align:center;
+  margin:15px 0 5px;
 }
 
-/* top-left → right & down */
-.pricing-item::before {
-  top: 0;
-  left: 0;
+.box-title{
+  text-align:center;
+  font-weight:600;
+  color:#4E342E;
 }
 
-/* bottom-right → left & up */
-.pricing-item::after {
-  bottom: 0;
-  right: 0;
+.box-sub{
+  display:block;
+  text-align:center;
+  font-size:13px;
+  color:#8d6e63;
 }
-
-/* hover animation */
-.pricing-item:hover::before {
-  width: 100%;
-  height: 100%;
-  border-top-color: #d37810ff;
-  border-right-color: #d37810ff;
-}
-
-.pricing-item:hover::after {
-  width: 100%;
-  height: 100%;
-  border-bottom-color: #f0ab0a;
-  border-left-color: #f0ab0a;
-}
-
-/* lift on hover */
-.pricing-item:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.15);
-}
-
-  .icon-circle {
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, #f0ab0a, #d37810ff) ;
-  color: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  margin: 20px auto 10px;
-}
-/* ===== ADVANCED DASHBOARD BOX UI ===== */
-
-.pricing-item {
-  background: #ffffff;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(194, 13, 13, 0.08);
-  transition: all 0.35s ease;
-  position: relative;
-}
-
-/* Top gradient bar */
-.pricing-item h3 {
-  background: linear-gradient(135deg, #f0ab0a, #d37810ff);
-  color: #fff;
-  margin: 0;  
-  padding: 16px;
-  font-size: 16px;
-  font-weight: 600;
-  text-align: center;
-}
-
-/* Number styling */
-.pricing-item h4 {
-  font-size: 42px;
-  font-weight: 700;
-  color: #f0ab0a;
-  margin: 22px 0;
-  text-align: center;
-}
-
-/* Hover effect */
-.pricing-item:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 18px 40px rgba(148, 116, 71, 0.15);
-}
-
-/* Icon inside title */
-.pricing-item h3 i {
-  margin-right: 6px;
-}
-
-/* Link reset */
-section#pricing a {
-  color: inherit;
-}
-
-/* Mobile spacing */
-@media (max-width: 768px) {
-  .pricing-item h4 {
-    font-size: 34px;
-  }
-   /* .container   {
-    margin-bottom: 100px
-   } */
-}
-
 </style>
-<body class="starter-page-page">
+</head>
 
-  <?php include 'header.php'; ?>
+<body>
 
-  <main class="main">
+<?php include 'header.php'; ?>
 
-  <div class="page-title" data-aos="fade">
-  <div class="heading" style="background-image:url('uploads/carsoul1.png');height: 420px;
-  background-size: cover;        /* no repeat */
-  background-position: center;
-  background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  color: #fff;
-  position: relative;
-  text-align: center;  
- 
-  ">
-    <div class="container">
+<main class="main">
 
-     <div id="dashboardCarousel"
-     class="carousel slide bg-carousel"
-     data-bs-ride="carousel"
-     data-bs-interval="3500">
-
-  <div class="carousel-inner text-center" >
-
-    <!-- Slide 1 -->
-    <div class="carousel-item active bg-slide"
-         >
-      <div class="overlay"></div>
-      <h1>Dashboard</h1>
-      <p class="mb-0">Welcome to Devinapura Village Digital Dashboard.</p>
-    </div>
-
-    <!-- Slide 2 -->
-    <div class="carousel-item bg-slide"
-         style="background-image:url('assets/img/carousel/slide2.jpg');">
-      <div class="overlay"></div>
-      <h1>Family Records</h1>
-      <p class="mb-0">Access complete family and member information easily.</p>
-    </div>
-
-    <!-- Slide 3 -->
-    <div class="carousel-item bg-slide"
-         style="background-image:url('assets/img/carousel/slide3.jpg');">
-      <div class="overlay"></div>
-      <h1>Announcements</h1>
-      <p class="mb-0">Stay updated with village announcements and notices.</p>
-    </div>
-
-    <!-- Slide 4 -->
-    <div class="carousel-item bg-slide"
-         style="background-image:url('assets/img/carousel/slide4.jpg');">
-      <div class="overlay"></div>
-      <h1>Notifications</h1>
-      <p class="mb-0">Never miss important village alerts and updates.</p>
-    </div>
-
-  </div>
-</div>
-
-
+<!-- ===== HERO ===== -->
+<div class="page-title" data-aos="fade">
+  <div class="heading d-flex align-items-center justify-content-center text-white"
+       style="background:url('uploads/carsoul1.png') center/cover;height:380px;">
+    <div class="text-center">
+      <h1>Village Dashboard</h1>
+      <p>Devinapura Digital Management System</p>
     </div>
   </div>
 </div>
 
-
-   <!-- Pricing Section -->
-<section id="pricing" class="pricing section">
+<!-- ===== DASHBOARD CARDS ===== -->
+<section class="pricing section">
   <div class="container">
-    <div class="row gy-3">
+    <div class="row gy-4">
 
-      <!-- Family Members -->
-      <a href="family-members.php"
-         class="col-6 col-xl-3 col-lg-6 text-decoration-none"
-         data-aos="fade-up"
-         data-aos-delay="200">
-
-        <div class="pricing-item featured">
-          <div class="icon-circle">
-            <i class="bi bi-people-fill"></i>
+      <!-- Families -->
+      <div class="col-6 col-lg-3" data-aos="fade-up">
+        <a href="family-members.php" class="text-decoration-none">
+          <div class="pricing-item">
+            <div class="icon-circle"><i class="bi bi-house-heart-fill"></i></div>
+            <h4 class="purecounter"
+                data-purecounter-start="0"
+                data-purecounter-end="<?= $familyCount ?>"
+                data-purecounter-duration="1">
+              <?= $familyCount ?>
+            </h4>
+            <p class="box-title">Families</p>
+            <small class="box-sub">Registered households</small>
           </div>
+        </a>
+      </div>
 
-          <h4>19</h4>
-
-          <p class="text-muted mb-0">Family Members</p>
-        </div>
-
-
-      </a>
-      <!-- End -->
-
-      <!-- Member List -->
-      <a href="members_list.php"
-         class="col-6 col-xl-3 col-lg-6 text-decoration-none"
-         data-aos="fade-up"
-         data-aos-delay="200">
-
-        <div class="pricing-item featured">
-          <div class="icon-circle">
-            <i class="bi bi-people-fill"></i>
+      <!-- Members -->
+      <div class="col-6 col-lg-3" data-aos="fade-up">
+        <a href="member-list.php" class="text-decoration-none">
+          <div class="pricing-item">
+            <div class="icon-circle"><i class="bi bi-people-fill"></i></div>
+            <h4 class="purecounter"
+                data-purecounter-start="0"
+                data-purecounter-end="<?= $memberCount ?>"
+                data-purecounter-duration="1">
+              <?= $memberCount ?>
+            </h4>
+            <p class="box-title">Members</p>
+            <small class="box-sub">Total villagers</small>
           </div>
-
-          <h4>19</h4>
-
-          <p class="text-muted mb-0"> Members List</p>
-        </div>
-
-      </a>
-      <!-- End -->
+        </a>
+      </div>
 
       <!-- Announcements -->
-      <a href="announcements.php"
-         class="col-6 col-xl-3 col-lg-6 text-decoration-none"
-         data-aos="fade-up"
-         data-aos-delay="200">
-
-        <div class="pricing-item featured">
-         <div class="icon-circle"> <i class="bi bi-megaphone-fill"></i></div>
-
-          <h4>19</h4>
-           <p class="text-muted mb-0">Annocuments</p>
-        </div>
-
-      </a>
-      <!-- End -->
+      <div class="col-6 col-lg-3" data-aos="fade-up">
+        <a href="announcements.php" class="text-decoration-none">
+          <div class="pricing-item">
+            <div class="icon-circle"><i class="bi bi-megaphone-fill"></i></div>
+            <h4 class="purecounter"
+                data-purecounter-start="0"
+                data-purecounter-end="<?= $announcementCount ?>"
+                data-purecounter-duration="1">
+              <?= $announcementCount ?>
+            </h4>
+            <p class="box-title">Announcements</p>
+            <small class="box-sub">Active notices</small>
+          </div>
+        </a>
+      </div>
 
       <!-- Notifications -->
-      <a href="notifications.php"
-         class="col-6 col-xl-3 col-lg-6 text-decoration-none"
-         data-aos="fade-up"
-         data-aos-delay="200">
-
-        <div class="pricing-item featured">
-          <div class="icon-circle"> <i class="bi bi-bell-fill"></i></div>
-
-          <h4>19</h4>
-           <p class="text-muted mb-0">Notifications</p>
-        </div>
-
-      </a>
-
-       <!-- Notifications -->
-      <a href="contact.php"
-         class="col-6 col-xl-3 col-lg-6 text-decoration-none"
-         data-aos="fade-up"
-         data-aos-delay="200">
-
-        <div class="pricing-item featured">
-          <div class="icon-circle"> <i class="bi bi-bell-fill"></i></div>
-
-          <h4>19</h4>
-           <p class="text-muted mb-0">Contact Us</p>
-        </div>
-
-      </a>
-
-      <a href="Members_Directory.php"
-         class="col-6 col-xl-3 col-lg-6 text-decoration-none"
-         data-aos="fade-up"
-         data-aos-delay="200">
-
-        <div class="pricing-item featured">
-          <div class="icon-circle"> <i class="bi bi-bell-fill"></i></div>
-
-          <h4>19</h4>
-           <p class="text-muted mb-0">Members Directory</p>
-        </div>
-
-      </a>
-
-      
-      <!-- End -->
+      <div class="col-6 col-lg-3" data-aos="fade-up">
+        <a href="notifications.php" class="text-decoration-none">
+          <div class="pricing-item">
+            <div class="icon-circle"><i class="bi bi-bell-fill"></i></div>
+            <h4 class="purecounter"
+                data-purecounter-start="0"
+                data-purecounter-end="<?= $notificationCount ?>"
+                data-purecounter-duration="1">
+              <?= $notificationCount ?>
+            </h4>
+            <p class="box-title">Alerts</p>
+            <small class="box-sub">Total notifications</small>
+          </div>
+        </a>
+      </div>
 
     </div>
   </div>
 </section>
 
+</main>
 
-  </main>
+<?php include 'footer.php'; ?>
 
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/aos/aos.js"></script>
+<script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
 
-    <?php include 'footer.php'; ?>
+<!-- MUST BE LAST -->
+<script src="assets/js/main.js"></script>
 
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+<script>
+  AOS.init();
+  new PureCounter();
+</script>
 
-  <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>
 
 </body>
-
 </html>

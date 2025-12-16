@@ -30,36 +30,41 @@
 
 <body class="starter-page-page">
 
-<header id="header" class="header d-flex align-items-center sticky-top">
+
+    <!-- NAV -->
+    <header id="header" class="header d-flex align-items-center sticky-top">
   <div class="container-fluid container-xl d-flex align-items-center">
 
-    <!-- LOGO -->
-    <a href="/devinapura/index.php" class="logo d-flex align-items-center me-auto">
+    <a href="index.php" class="logo d-flex align-items-center me-auto">
       <h1 class="sitename">Devinapura</h1>
     </a>
 
-    <!-- NAV -->
     <nav id="navmenu" class="navmenu">
       <ul>
-        <li><a href="/devinapura/index.php">Dashboard</a></li>
-        <li><a href="/devinapura/members_list.php">Members List</a></li>
-        <li><a href="/devinapura/gallery.php">Gallery</a></li>
+        <li><a href="index.php" class="active">Dashboard</a></li>
+        <li><a href="members_list.php">Members List</a></li>
+        <li><a href="gallery.php">Gallery</a></li>
 
         <li class="dropdown">
           <a href="#"><span>More</span>
             <i class="bi bi-chevron-down toggle-dropdown"></i>
           </a>
           <ul>
-            <li><a href="/devinapura/announcements/announcement-user.php">Announcement</a></li>
-            <li><a href="/devinapura/announcements/besnu.php">Besnu</a></li>
+            <li><a href="announcements/announcement-user.php">Announcement</a></li>
+            <li><a href="announcements/besnu.php">Besnu</a></li>
           </ul>
         </li>
 
-        <li><a href="/devinapura/contact.php">Contact</a></li>
+        <li><a href="contact.php">Contact</a></li>
       </ul>
 
+      <!-- THIS IS REQUIRED -->
       <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
     </nav>
+
+  </div>
+</header>
+
 
   </div>
 </header>
