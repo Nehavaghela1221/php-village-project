@@ -2046,7 +2046,13 @@ section,
 /*--------------------------------------------------------------
 # Starter Section Section
 --------------------------------------------------------------*/
+<<<<<<< HEAD
 
+=======
+.starter-section {
+  /* Add your styles here */
+}
+>>>>>>> eb6cf95 (Added gallery upload)
 /* =====================================================
    GALLERY – FAST, CLEAN, MOBILE FIRST
 ===================================================== */
@@ -2535,9 +2541,27 @@ video {
   }
 
   /* Buttons */
+<<<<<<< HEAD
  
 
  
+=======
+  .add-btn {
+    background: linear-gradient(135deg, #29B6F6, #039be5);
+    color: #fff;
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: .2s;
+  }
+
+  .add-btn:hover {
+    transform: scale(1.05);
+  }
+>>>>>>> eb6cf95 (Added gallery upload)
 
   /* Mobile Responsive */
   @media (max-width: 600px) {
@@ -2654,7 +2678,27 @@ video {
 }
 
 /* Add Button */
+<<<<<<< HEAD
 
+=======
+.add-btn {
+  background: linear-gradient(135deg, #29B6F6, #0288d1);
+  color: #fff;
+  padding: 11px 26px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(41,182,246,0.35);
+  transition: .25s ease;
+}
+
+.add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 35px rgba(41,182,246,0.45);
+}
+>>>>>>> eb6cf95 (Added gallery upload)
 
 /* Mobile */
 @media (max-width: 600px) {
@@ -2666,6 +2710,7 @@ video {
     font-size: 17px;
   }
 }
+<<<<<<< HEAD
 /* ==================================================
    ANNOUNCEMENTS – VILLAGE THEME
 ================================================== */
@@ -3004,3 +3049,5 @@ margin: 25px;
 
 
 
+=======
+>>>>>>> eb6cf95 (Added gallery upload)
