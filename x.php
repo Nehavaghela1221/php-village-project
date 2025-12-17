@@ -96,7 +96,7 @@ if ($view === 'relation' && in_array($relation, ['Wife','Son','Daughter'])) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
-
+<!-- Main CSS -->
 <link href="assets/css/main.css" rel="stylesheet">
 
 <style>
@@ -106,28 +106,19 @@ if ($view === 'relation' && in_array($relation, ['Wife','Son','Daughter'])) {
   border-radius:50%;
   object-fit:cover;
 }
-
-@media(max-width:576px){
-  .member-img{
-    width:40px;
-    height:40px;
-  }
-}
 </style>
 </head>
 
 <body>
-
-<?php include 'header.php'; ?>
-
+  <?php include 'header.php'; ?>
 <div class="container my-4">
 
-<h3 class="text-center mb-4">
+<h3 class="text-center mb-4 ">
 <i class="bi bi-people-fill"></i> Members Directory
 </h3>
 
 <!-- BUTTONS -->
-<div class="row mb-3 text-center g-2">
+<div class="row mb-3 text-center">
   <div class="col-md-4">
     <a href="?view=main" class="btn btn add-btn w-100">
       Main Members <span class="badge bg-dark"><?= $mainCount ?></span>
@@ -146,7 +137,7 @@ if ($view === 'relation' && in_array($relation, ['Wife','Son','Daughter'])) {
 </div>
 
 <?php if($view === 'relation'): ?>
-<div class="d-flex flex-wrap justify-content-center gap-2 mb-3">
+<div class="text-center mb-3">
   <a href="?view=relation&relation=Wife" class="btn btn-warning">Wife <?= $wifeCount ?></a>
   <a href="?view=relation&relation=Son" class="btn btn-warning">Son <?= $sonCount ?></a>
   <a href="?view=relation&relation=Daughter" class="btn btn-warning">Daughter <?= $daughterCount ?></a>
@@ -154,9 +145,8 @@ if ($view === 'relation' && in_array($relation, ['Wife','Son','Daughter'])) {
 <?php endif; ?>
 
 <?php if($view && $data instanceof mysqli_result): ?>
-<div class="table-responsive">
 <table id="exportTable" class="table table-bordered table-striped">
-<thead class="table-warning">
+<thead class="table-dark">
 <tr>
   <th>Serial</th>
   <th>Photo</th>
@@ -169,8 +159,7 @@ if ($view === 'relation' && in_array($relation, ['Wife','Son','Daughter'])) {
 
 <?php while($r = $data->fetch_assoc()): ?>
 <tr>
-  <td><?= $r['serial_no'] ?></td>
-
+   <td><?= $r['serial_no'] ?></td>
   <td>
     <img src="uploads/<?= $r['photo'] ?: 'no-user.png' ?>" class="member-img">
   </td>
@@ -179,11 +168,16 @@ if ($view === 'relation' && in_array($relation, ['Wife','Son','Daughter'])) {
 
   <td><?= $r['relation'] ?></td>
 
+ 
+
   <td>
     <?php
+    // ✅ MAIN MEMBER → ALWAYS SHOW
     if ($r['relation'] === 'Main') {
         echo $r['phone'];
-    } else {
+    }
+    // ✅ FAMILY MEMBER
+    else {
         if (strtolower($r['gender']) === 'female') {
             echo '<i class="bi bi-shield-lock-fill text-muted"></i> Can\'t see';
         } else {
@@ -197,7 +191,6 @@ if ($view === 'relation' && in_array($relation, ['Wife','Son','Daughter'])) {
 
 </tbody>
 </table>
-</div>
 <?php endif; ?>
 
 </div>

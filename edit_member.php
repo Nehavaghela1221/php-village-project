@@ -120,14 +120,29 @@ if(isset($_POST['add_family'])){
 </head>
 
 <body>
+<?php include 'header.php'; ?>
 
-<div class="container my-5">
+<div class="container my-5"> <!-- Right button -->
+   <div class="text-end mb-3">
+  <button type="button"
+          class="btn text-white add-btn"
+          data-bs-toggle="modal"
+          data-bs-target="#addFamilyModal">
+    <i class="bi bi-person-plus-fill"></i> Add Family Member
+  </button>
+</div>
+
 
 <!-- ================= MAIN MEMBER EDIT ================= -->
 <div class="card shadow">
-<div class="card-header bg-warning text-dark fw-bold">
-<i class="bi bi-pencil-square"></i> Edit Member
-</div>
+
+  <div class="card-header bg-warning  fw-bold
+              d-flex justify-content-between align-items-center" style="color:#6A1B9A">
+    <!-- Left title -->
+    <span>
+      <i class="bi bi-pencil-square me-1"></i> Edit Main Member
+    </span>
+  </div>
 
 <div class="card-body">
 
@@ -220,24 +235,21 @@ value="<?= htmlspecialchars($member['occupation']) ?>">
 </div>
   
 <div class="text-center mt-4">
-<button type="submit" name="update_member" class="btn btn-warning px-5 fw-bold">
+<button type="submit" name="update_member" class="btn btn add-btn px-5 fw-bold text-white">
 Send Update Request
 </button>
-<a href="members_list.php" class="btn btn-secondary ms-2">Back</a>
+
+<a href="members_list.php" class="btn add-btn ms-2">
+  <i class="bi bi-arrow-left-circle me-1"></i> Back
+</a>
+
+
 </div>
 
 </form>
 </div>
 </div>
-<!-- ADD FAMILY MEMBER BUTTON -->
-<div class="text-center mt-4">
-  <button type="button"
-          class="btn btn-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#addFamilyModal">
-    <i class="bi bi-person-plus-fill"></i> Add Family Member
-  </button>
-</div>
+
 
 <!-- ADD FAMILY MEMBER MODAL (NEW ONLY) -->
 <div class="modal fade" id="addFamilyModal" tabindex="-1">
@@ -246,8 +258,12 @@ Send Update Request
 
       <form method="POST" enctype="multipart/form-data">
 
-        <div class="modal-header bg-primary text-white">
-          <h5 class="modal-title">Add Family Member</h5>
+        <div class="modal-header card-header">
+          <h5 class="modal-title fw-bold">
+            <i class="bi bi-people-fill me-2"></i>
+            Add Family Member
+          </h5>
+
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
@@ -290,9 +306,12 @@ Send Update Request
 
 
         <div class="modal-footer">
-          <button type="submit" name="add_family" class="btn btn-success">
-            Save
+          <button type="submit"
+            name="add_family"
+            class="btn add-btn w-100">
+            <i class="bi bi-save me-1"></i> Save
           </button>
+
         </div>
 
       </form>

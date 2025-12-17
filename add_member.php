@@ -1,5 +1,4 @@
 <?php
-
 require 'admin/auth.php'; 
 require 'config/db.php';
 $msg = "";
@@ -91,67 +90,15 @@ if (isset($_POST['submit'])) {
 <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<link href="/devinapura/assets/css/main.css" rel="stylesheet">
 
-<style>
-body{
-  background: linear-gradient(135deg,#eef2f7,#dfe7f3);
-  font-family: "Segoe UI", sans-serif;
-}
-
-.card{
-  border-radius: 22px;
-  border: none;
-  overflow: hidden;
-}
-
-.card-header{
-  background: linear-gradient(90deg,#0d6efd,#6610f2);
-  color: #fff;
-  padding: 25px;
-}
-
-.card-header h4{
-  margin:0;
-  font-weight:600;
-}
-
-.section-title{
-  font-size: 13px;
-  text-transform: uppercase;
-  color: #6c757d;
-  font-weight: 600;
-  margin: 30px 0 12px;
-  letter-spacing: 1px;
-}
-
-.form-control,.form-select{
-  border-radius: 14px;
-  padding: 12px 15px;
-}
-
-.form-control:focus,.form-select:focus{
-  border-color:#6610f2;
-  box-shadow: 0 0 0 .15rem rgba(102,16,242,.2);
-}
-
-.btn-save{
-  border-radius:40px;
-  padding:12px 40px;
-  font-weight:600;
-}
-
-@media(max-width:768px){
-  .btn-save{width:100%}
-}
-</style>
 </head>
 
 <body>
  <!-- NAVBAR -->
   <div class="admin-navbar">
     <div class="admin-navbar-inner">
-      <h2 style="    color: #f0ab0a;
-">📸 Gallery Admin</h2>
+      <h2 style="color: #f0ab0a;">Welcome Admin</h2>
       <a href="admin/logout.php" class="exit-btn">Exit Admin</a>
     </div>
   </div>
@@ -270,7 +217,7 @@ body{
 
 <!-- SAVE -->
 <div class="text-center mt-4">
-<button type="button" class="btn btn-primary btn-save"
+<button type="button" class="btn add-btn btn-save"
 data-bs-toggle="modal" data-bs-target="#confirmModal">
 <i class="bi bi-save"></i> Save Member
 </button>
@@ -280,15 +227,15 @@ data-bs-toggle="modal" data-bs-target="#confirmModal">
 <div class="modal fade" id="confirmModal">
 <div class="modal-dialog modal-dialog-centered">
 <div class="modal-content">
-<div class="modal-header bg-primary text-white">
+<div class="modal-header card-header text-white">
 <h5 class="modal-title"><i class="bi bi-check-circle"></i> Confirm Save</h5>
 </div>
 <div class="modal-body text-center">
 Are you sure you want to save this member?
 </div>
 <div class="modal-footer justify-content-center">
-<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-<button type="submit" name="submit" class="btn btn-primary">Yes, Save</button>
+<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+<button type="submit" name="submit" class="btn btn-warning">Yes, Save</button>
 </div>
 </div>
 </div>

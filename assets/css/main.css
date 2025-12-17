@@ -2046,9 +2046,7 @@ section,
 /*--------------------------------------------------------------
 # Starter Section Section
 --------------------------------------------------------------*/
-.starter-section {
-  /* Add your styles here */
-}
+
 /* =====================================================
    GALLERY – FAST, CLEAN, MOBILE FIRST
 ===================================================== */
@@ -2537,21 +2535,9 @@ video {
   }
 
   /* Buttons */
-  .add-btn {
-    background: linear-gradient(135deg, #29B6F6, #039be5);
-    color: #fff;
-    border-radius: 30px;
-    padding: 10px 20px;
-    font-size: 14px;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    transition: .2s;
-  }
+ 
 
-  .add-btn:hover {
-    transform: scale(1.05);
-  }
+ 
 
   /* Mobile Responsive */
   @media (max-width: 600px) {
@@ -2668,23 +2654,7 @@ video {
 }
 
 /* Add Button */
-.add-btn {
-  background: linear-gradient(135deg, #29B6F6, #0288d1);
-  color: #fff;
-  padding: 11px 26px;
-  border-radius: 30px;
-  font-size: 14px;
-  font-weight: 700;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 8px 20px rgba(41,182,246,0.35);
-  transition: .25s ease;
-}
 
-.add-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 35px rgba(41,182,246,0.45);
-}
 
 /* Mobile */
 @media (max-width: 600px) {
@@ -2696,3 +2666,341 @@ video {
     font-size: 17px;
   }
 }
+/* ==================================================
+   ANNOUNCEMENTS – VILLAGE THEME
+================================================== */
+
+/* -------- Announcement Grid -------- */
+.announcement-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* -------- Base Card -------- */
+.announcement-card {
+  background: var(--surface-color);
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.announcement-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
+}
+
+/* -------- Title -------- */
+.announcement-card .card-title {
+  font-family: var(--heading-font);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--heading-color);
+  margin-bottom: 6px;
+}
+
+/* -------- Description -------- */
+.announcement-text {
+  font-family: var(--default-font);
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--default-color);
+  margin: 10px 0 14px;
+}
+
+/* -------- Meta Text -------- */
+.announcement-card small {
+  font-size: 13px;
+  color: #7b6f63;
+}
+
+/* ==================================================
+   ACTIVE ANNOUNCEMENT
+================================================== */
+.announcement-active {
+  border-left: 6px solid var(--accent-color);
+  background: linear-gradient(135deg, #fffaf0, var(--surface-color));
+}
+
+.announcement-active .status-badge {
+  background: linear-gradient(
+    135deg,
+    var(--accent-color),
+    var(--accent-dark)
+  );
+  color: var(--contrast-color);
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 20px;
+}
+
+/* ==================================================
+   EXPIRED ANNOUNCEMENT
+================================================== */
+.announcement-expired {
+  border-left: 6px solid #9e9e9e;
+  background: linear-gradient(135deg, #f7f7f7, var(--surface-color));
+  opacity: 0.85;
+}
+
+.announcement-expired .card-title,
+.announcement-expired .announcement-text {
+  color: #7a7a7a;
+}
+
+.announcement-expired .status-badge {
+  background: #9e9e9e;
+  color: #fff;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 20px;
+}
+
+/* ==================================================
+   ANNOUNCEMENT HEADER
+================================================== */
+.announcement-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+margin: 25px;
+
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+/* Big Heading */
+.announcement-header h2 {
+  font-family: var(--heading-font);
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--heading-color);
+  margin: 0;
+  letter-spacing: 0.4px;
+}
+
+/* ==================================================
+   ADD ANNOUNCEMENT BUTTON
+================================================== */
+.add-btn {
+  background: linear-gradient(
+    135deg,
+    var(--accent-color),
+    var(--accent-dark)
+  );
+  color: var(--contrast-color);
+  border-radius: 999px;
+  padding: 12px 26px;
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+.add-btn:hover {
+  transform: translateY(-2px);
+}
+
+.add-btn:active {
+  transform: translateY(0);
+}
+
+/* ==================================================
+   MOBILE FIX – ANNOUNCEMENTS PAGE
+================================================== */
+@media (max-width: 768px) {
+
+  /* Header spacing */
+  .announcement-header {
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  /* Smaller, cleaner heading */
+  .announcement-header h2 {
+    font-size: 22px;          /* was too big */
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  /* Make button lighter & compact */
+
+
+  /* Cards: tighter spacing */
+  .announcement-grid {
+    gap: 14px;
+    margin: 25px;
+  }
+
+  .announcement-card {
+    border-radius: 14px;
+  }
+
+  .announcement-card .card-body {
+    padding: 16px 18px;
+  }
+
+  /* Title inside card */
+  .announcement-card .card-title {
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+
+  /* Description */
+  .announcement-text {
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 6px 0 10px;
+  }
+
+  /* Status badge smaller */
+  .status-badge {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+}
+
+/* member list css */
+/* Active page */
+.page-item.active .page-link{
+  background-color:#ffc107;   /* Bootstrap warning */
+  border-color:#ffc107;
+  color:#000;
+}
+
+/* Normal page links */
+.page-link{
+  color:#000;
+}
+
+/* Hover effect */
+.page-link:hover{
+  background-color:#ffe08a;
+  color:#000;
+}
+
+/* Previous / Next buttons */
+.page-item .page-link{
+  border-radius:6px;
+}
+.page-item.disabled .page-link{
+  color:#999;
+}
+.page-link{
+  margin:0 3px;
+}
+.card{
+  border-radius: 22px;
+  border: none;
+  overflow: hidden;
+}
+
+.card-header{
+  background: linear-gradient(135deg, #f0ab0a, #d37810);
+  color: #fff;
+  padding: 25px;
+}
+
+.card-header h4{
+  margin:0;
+  font-weight:600;
+}
+
+.section-title{
+  font-size: 13px;
+  text-transform: uppercase;
+  color: #6A1B9A;
+  font-weight: 600;
+  margin: 30px 0 12px;
+  letter-spacing: 1px;
+}
+
+.form-control,.form-select{
+  border-radius: 14px;
+  padding: 12px 15px;
+}
+
+.form-control:focus,.form-select:focus{
+  border-color:#6A1B9A;
+  box-shadow: 0 0 0 .15rem rgba(102,16,242,.2);
+}
+
+.btn-save{
+  border-radius:40px;
+  padding:12px 40px;
+  font-weight:600;
+}
+
+@media(max-width:768px){
+  .btn-save{width:100%}
+}
+
+
+/* members detilas */
+/* * ===== LEFT PHOTO CARD ===== */ 
+.photo-box{
+     background: linear-gradient(135deg, #f0ab0a, #d37810);
+    border-radius:18px;
+    padding:30px 15px;
+    text-align:center;
+    color:#fff;
+    /* box-shadow:0 12px 30px rgba(0,0,0,.2); */
+}
+.photo-box img{
+    width:160px;
+    height:160px;
+    border-radius:50%;
+    object-fit:cover;
+    border:5px solid #fff;
+}
+.photo-box h5{
+    margin-top:15px;
+    font-weight:700;
+}
+
+/* ===== DETAILS TABLE ===== */
+.member-table{
+    border-radius:18px;
+    overflow:hidden;
+    /* box-shadow:0 12px 30px rgba(0,0,0,.15); */
+}
+.member-table th{
+    width:220px;
+    background:#f8f9ff;
+    border-left:5px solid #6A1B9A;
+    font-weight:600;
+}
+.member-table tr:hover td{
+    background:#f9fbff;
+}
+
+/* ===== FAMILY TABLE ===== */
+.family-table{
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 12px 28px rgba(0,0,0,.12);
+}
+.family-table thead th{
+     background: linear-gradient(135deg, #f0ab0a, #d37810);
+    color:#fff;
+}
+.family-table tbody tr:hover{
+    background:#f2fff9;
+}
+.family-photo{
+    width:65px;
+    height:65px;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid #6A1B9A;
+}
+
+
+
+
+

@@ -45,23 +45,34 @@ require 'config/db.php';
   width:320px;
   text-align:center;
 }
+
 </style>
 </head>
 
 <body>
-
+<?php include 'header.php'; ?>
 <div class="container my-5">
 
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h3 class="fw-bold text-primary mb-0">Members List</h3>
-    <button class="btn btn-success" onclick="openPinModal()">
-      <i class="bi bi-person-plus-fill"></i> Add Member
-    </button>
-  </div>
+<div class="d-flex flex-column flex-md-row
+            justify-content-center justify-content-md-between
+            align-items-center
+            mb-4 gap-2">
+
+  <h3 class="fw-bold mb-0 text text-center text-md-start">
+    Members List
+  </h3>
+
+  <button class="btn add-btn"
+          onclick="openPinModal()">
+    <i class="bi bi-person-plus-fill me-1"></i> Add Member
+  </button>
+
+</div>
+
 
   <div class="table-responsive shadow rounded bg-white p-3">
-    <table id="membersTable" class="table table-bordered table-striped align-middle">
-      <thead class="table-dark">
+    <table id="membersTable" class="table table-bordered table-striped align-middle ">
+      <thead class="table-warning">
         <tr>
           <th>Serial No</th>
           <th>Photo</th>
@@ -116,20 +127,22 @@ else {
 
   <!-- ACTION -->
   <td class="text-center">
-
+ <div class="d-flex justify-content-center align-items-center gap-2">
     <!-- VIEW always -->
     <a href="member_details.php?id=<?= $row['id'] ?>" 
-       class="btn btn-info btn-sm">
+      class="btn btn-sm text-white"
+      style="background-color:#6A1B9A;">
       <i class="bi bi-eye"></i>
     </a>
-    <!-- EDIT only when NOT pending -->
+
+        <!-- EDIT only when NOT pending -->
     <?php if($row['update_status'] !== 'pending'): ?>
       <button class="btn btn-warning btn-sm"
               onclick="openDobModal('<?= $row['serial_no'] ?>')">
         <i class="bi bi-pencil-square"></i>
       </button>
     <?php endif; ?>
-
+  </div>
   </td>
 </tr>
 
@@ -210,13 +223,39 @@ function verifyDob(){
   });
 }
 
+
 $(function(){
   $('#membersTable').DataTable({
-    pageLength:10,
-    buttons:['excel','pdf','csv','print'],
-    dom:"<'row mb-3'<'col-sm-6'l><'col-sm-6 text-end'Bf>>tr<'row mt-3'<'col-sm-5'i><'col-sm-7'p>>"
+    pageLength: 10,
+
+    dom:
+      "<'row mb-3 align-items-center'" +
+        "<'col-md-4 col-sm-12'l>" +   // LEFT: Length
+        "<'col-md-8 col-sm-12 d-flex justify-content-end align-items-center gap-2'fB>" +
+      ">" +
+      "tr" +
+      "<'row mt-3'" +
+        "<'col-sm-5'i>" +
+        "<'col-sm-7'p>" +
+      ">",
+
+    buttons:[
+      {
+        extend: 'collection',
+        text: '<i class="bi bi-download"></i> Export',
+        className: 'btn btn-sm btn-warning',
+        buttons: [
+          { extend: 'excel', text: 'Excel' },
+          { extend: 'pdf',   text: 'PDF' },
+          { extend: 'csv',   text: 'CSV' },
+          { extend: 'print', text: 'Print' }
+        ]
+      }
+    ]
   });
 });
+
+
 </script>
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

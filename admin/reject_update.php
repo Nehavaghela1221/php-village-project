@@ -2,7 +2,9 @@
 require '../config/db.php';
 
 $serial_no = $_GET['serial_no'] ?? '';
-if ($serial_no == '') die("Invalid Request");
+if ($serial_no == '') {
+    die("Invalid Request");
+}
 
 $rej = $conn->prepare("
     UPDATE members 
@@ -14,5 +16,6 @@ $rej = $conn->prepare("
 $rej->bind_param("s", $serial_no);
 $rej->execute();
 
-echo "Rows updated: ".$rej->affected_rows; // TEMP DEBUG
+/* ✅ REDIRECT AFTER REJECT */
+header("Location: update_requests.php?status=rejected");
 exit;

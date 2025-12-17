@@ -111,7 +111,7 @@ $notificationCount = $conn->query("
 <!-- ===== HERO ===== -->
 <div class="page-title" data-aos="fade">
   <div class="heading d-flex align-items-center justify-content-center text-white"
-       style="background:url('uploads/carsoul1.png') center/cover;height:380px;">
+       style="background:url('assets/img/main-page-img.jpg') center/cover;height:380px;">
     <div class="text-center">
       <h1>Village Dashboard</h1>
       <p>Devinapura Digital Management System</p>
@@ -177,7 +177,7 @@ $notificationCount = $conn->query("
 
       <!-- Notifications -->
       <div class="col-6 col-lg-3" data-aos="fade-up">
-        <a href="notifications.php" class="text-decoration-none">
+        <a href="admin\update_requests.php" class="text-decoration-none">
           <div class="pricing-item">
             <div class="icon-circle"><i class="bi bi-bell-fill"></i></div>
             <h4 class="purecounter"
@@ -187,6 +187,40 @@ $notificationCount = $conn->query("
               <?= $notificationCount ?>
             </h4>
             <p class="box-title">Alerts</p>
+            <small class="box-sub">Total notifications</small>
+          </div>
+        </a>
+      </div>
+
+      <!-- Notifications -->
+      <div class="col-6 col-lg-3" data-aos="fade-up">
+        <a href="Members_Directory.php" class="text-decoration-none">
+          <div class="pricing-item">
+            <div class="icon-circle"><i class="bi bi-bell-fill"></i></div>
+            <h4 class="purecounter"
+                data-purecounter-start="0"
+                data-purecounter-end="<?= $notificationCount ?>"
+                data-purecounter-duration="1">
+              <?= $notificationCount ?>
+            </h4>
+            <p class="box-title">Members Directory</p>
+            <small class="box-sub">Total notifications</small>
+          </div>
+        </a>
+      </div>
+
+       <!-- Notifications -->
+      <div class="col-6 col-lg-3" data-aos="fade-up">
+        <a href="contact.php" class="text-decoration-none">
+          <div class="pricing-item">
+            <div class="icon-circle"><i class="bi bi-bell-fill"></i></div>
+            <h4 class="purecounter"
+                data-purecounter-start="0"
+                data-purecounter-end="<?= $notificationCount ?>"
+                data-purecounter-duration="1">
+              <?= $notificationCount ?>
+            </h4>
+            <p class="box-title">Contacts</p>
             <small class="box-sub">Total notifications</small>
           </div>
         </a>

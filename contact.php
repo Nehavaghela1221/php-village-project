@@ -30,12 +30,14 @@ if (isset($_GET['search'])) {
 
 <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+<link href="assets/css/main.css" rel="stylesheet">
 </head>
 
 <body>
+  <?php include 'header.php'; ?>
 <div class="container my-5">
 
-<h3 class="mb-4 text-primary">
+<h3 class="mb-4">
 <i class="bi bi-search"></i> Search Member Contact
 </h3>
 
@@ -49,7 +51,7 @@ if (isset($_GET['search'])) {
            required>
   </div>
   <div class="col-md-4">
-    <button class="btn btn-primary w-100">
+    <button class="btn add-btn w-100">
       <i class="bi bi-search"></i> Search
     </button>
   </div>

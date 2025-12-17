@@ -1,8 +1,6 @@
 <?php
 require '../config/db.php';
 
-
-
 /* ================= SERIAL ================= */
 $serial_no = $_GET['serial_no'] ?? '';
 if ($serial_no == '') die("Invalid Request");
@@ -25,82 +23,96 @@ $newData = json_decode($member['pending_data'], true);
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Compare Update</title>
-    <style>
-        body{
-            font-family: Arial, sans-serif;
-            background:#f5f5f5;
-        }
-        table{
-            width:95%;
-            margin:auto;
-            border-collapse:collapse;
-            background:#fff;
-        }
-        th,td{
-            border:1px solid #ccc;
-            padding:10px;
-        }
-        th{
-            background:#222;
-            color:#fff;
-        }
-        .old{
-            background:#f8d7da;
-        }
-        .new{
-            background:#d1e7dd;
-        }
-        .btn{
-            padding:10px 16px;
-            text-decoration:none;
-            color:#fff;
-            border-radius:4px;
-            margin-right:10px;
-        }
-        .approve{ background:#198754; }
-        .reject{ background:#dc3545; }
-        .back{ background:#0d6efd; }
-    </style>
+<meta charset="UTF-8">
+<title>Compare Member Update</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- BOOTSTRAP -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="/devinapura/assets/css/main.css" rel="stylesheet">
 </head>
+
 <body>
 
-<h2 style="text-align:center;margin:20px;">
-    Compare Member Update (<?= htmlspecialchars($serial_no) ?>)
-</h2>
+ <!-- NAVBAR -->
+  <div class="admin-navbar">
+    <div class="admin-navbar-inner">
+      <h2 style="color: #f0ab0a;">Welcome Admin</h2>
+      <a href="logout.php" class="exit-btn">Exit Admin</a>
+    </div>
+  </div>
 
-<table>
-<tr>
-    <th>Field</th>
-    <th>Old Data</th>
-    <th>New Data</th>
-</tr>
+<div class="container my-4" >
 
-<?php foreach ($newData as $key => $value): ?>
-<tr>
-    <td><?= htmlspecialchars($key) ?></td>
-    <td class="old"><?= htmlspecialchars($oldData[$key] ?? '-') ?></td>
-    <td class="new"><?= htmlspecialchars($value) ?></td>
-</tr>
-<?php endforeach; ?>
+    <h3 class="text-center text-purple fw-bold mb-4" style="color:#6f42c1;">
+        Compare Member Update (<?= htmlspecialchars($serial_no) ?>)
+    </h3>
 
-</table>
+    <!-- TABLE CARD -->
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
 
-<br><br>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover mb-0 align-middle">
+                    <thead class="table-warning">
+                        <tr>
+                            <th width="25%">Field</th>
+                            <th width="35%">Old Data</th>
+                            <th width="35%">New Data</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-<div style="text-align:center;">
-    <a class="btn approve" href="approve_update.php?serial_no=<?= $serial_no ?>">
+                    <?php foreach ($newData as $key => $value):
+
+                        $oldVal = $oldData[$key] ?? '';
+                        $isChanged = trim((string)$oldVal) !== trim((string)$value);
+                    ?>
+                        <tr class="<?= $isChanged ? 'table-warning' : '' ?>">
+                            <td class="<?= $isChanged ? 'fw-bold' : '' ?>">
+                                <?= htmlspecialchars($key) ?>
+                            </td>
+
+                            <td class="<?= $isChanged ? 'fw-bold text-danger' : '' ?>">
+                                <?= htmlspecialchars($oldVal ?: '-') ?>
+                            </td>
+
+                            <td class="<?= $isChanged ? 'fw-bold text-success' : '' ?>">
+                                <?= htmlspecialchars($value) ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="text-center mt-4">
+    
+    <a href="approve_update.php?serial_no=<?= urlencode($serial_no) ?>"
+       class="btn btn-success px-4 py-2 mt-2">
         ✅ Approve Update
     </a>
 
-    <a class="btn reject" href="reject_update.php?serial_no=<?= $serial_no ?>">❌ Reject Update</a>
+    <a href="reject_update.php?serial_no=<?= urlencode($serial_no) ?>"
+       class="btn btn-danger px-4 py-2 mt-2">
+        ❌ Reject Update
+    </a>
 
-
-    <a class="btn back" href="update_requests.php">
+    <a href="update_requests.php"
+       class="btn btn-primary px-4 py-2 mt-2">
         ⬅ Back
     </a>
+
+</div>
+
+
 </div>
 
 </body>
