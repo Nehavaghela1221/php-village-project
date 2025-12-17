@@ -281,6 +281,7 @@ $(function(){
 <!-- Buttons -->
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+<?php include $_SERVER['DOCUMENT_ROOT'].'/devinapura/footer.php'; ?>
 
 </body>
 </html>

@@ -26,18 +26,13 @@ $notificationCount = $conn->query("
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Village Dashboard</title>
+<title>Contact Search</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- Vendor CSS -->
-<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-<link href="assets/vendor/aos/aos.css" rel="stylesheet">
 
-<!-- Main CSS -->
-<link href="assets/css/main.css" rel="stylesheet">
+</head>
+
 
 <style>
 /* ===== DASHBOARD CARD UI (FIXED) ===== */
@@ -99,20 +94,44 @@ $notificationCount = $conn->query("
   text-align:center;
   font-size:13px;
   color:#8d6e63;
+}/* FULL WIDTH HERO */
+.hero {
+  width: 100vw;
+  height: calc(100vh - 80px); /* navbar height */
+  background: 
+    
+    url("assets/img/main-page-img.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+.bg-family     { background: linear-gradient(135deg,#ffb703,#fb8500); }
+.bg-members    { background: linear-gradient(135deg,#4dabf7,#1c7ed6); }
+.bg-announce   { background: linear-gradient(135deg,#ff6b6b,#e03131); }
+.bg-alert      { background: linear-gradient(135deg,#ffd43b,#fab005); }
+.bg-directory  { background: linear-gradient(135deg,#9775fa,#7048e8); }
+.bg-contact    { background: linear-gradient(135deg,#51cf66,#2f9e44); }
+
+
 </style>
 </head>
 
 <body>
 
-<?php include 'header.php'; ?>
-
+  <?php include 'header.php'; ?>
 <main class="main">
 
 <!-- ===== HERO ===== -->
-<div class="page-title" data-aos="fade">
-  <div class="heading d-flex align-items-center justify-content-center text-white"
-       style="background:url('assets/img/main-page-img.jpg') center/cover;height:380px;">
+<div class="page-title hero" data-aos="fade">
+  <div class="heading d-flex  align-items-center justify-content-center text-white"
+       >
     <div class="text-center">
       <h1>Village Dashboard</h1>
       <p>Devinapura Digital Management System</p>
@@ -129,11 +148,11 @@ $notificationCount = $conn->query("
       <div class="col-6 col-lg-3" data-aos="fade-up">
         <a href="family-members.php" class="text-decoration-none">
           <div class="pricing-item">
-            <div class="icon-circle"><i class="bi bi-house-heart-fill"></i></div>
+            <div class="icon-circle bg-family">
+              <i class="bi bi-house-heart-fill"></i>
+            </div>
             <h4 class="purecounter"
-                data-purecounter-start="0"
-                data-purecounter-end="<?= $familyCount ?>"
-                data-purecounter-duration="1">
+                data-purecounter-end="<?= $familyCount ?>">
               <?= $familyCount ?>
             </h4>
             <p class="box-title">Families</p>
@@ -146,11 +165,11 @@ $notificationCount = $conn->query("
       <div class="col-6 col-lg-3" data-aos="fade-up">
         <a href="member-list.php" class="text-decoration-none">
           <div class="pricing-item">
-            <div class="icon-circle"><i class="bi bi-people-fill"></i></div>
+            <div class="icon-circle bg-members">
+              <i class="bi bi-people-fill"></i>
+            </div>
             <h4 class="purecounter"
-                data-purecounter-start="0"
-                data-purecounter-end="<?= $memberCount ?>"
-                data-purecounter-duration="1">
+                data-purecounter-end="<?= $memberCount ?>">
               <?= $memberCount ?>
             </h4>
             <p class="box-title">Members</p>
@@ -163,11 +182,11 @@ $notificationCount = $conn->query("
       <div class="col-6 col-lg-3" data-aos="fade-up">
         <a href="announcements.php" class="text-decoration-none">
           <div class="pricing-item">
-            <div class="icon-circle"><i class="bi bi-megaphone-fill"></i></div>
+            <div class="icon-circle bg-announce">
+              <i class="bi bi-megaphone-fill"></i>
+            </div>
             <h4 class="purecounter"
-                data-purecounter-start="0"
-                data-purecounter-end="<?= $announcementCount ?>"
-                data-purecounter-duration="1">
+                data-purecounter-end="<?= $announcementCount ?>">
               <?= $announcementCount ?>
             </h4>
             <p class="box-title">Announcements</p>
@@ -176,60 +195,59 @@ $notificationCount = $conn->query("
         </a>
       </div>
 
-      <!-- Notifications -->
+      <!-- Alerts -->
       <div class="col-6 col-lg-3" data-aos="fade-up">
-        <a href="admin\update_requests.php" class="text-decoration-none">
+        <a href="admin/update_requests.php" class="text-decoration-none">
           <div class="pricing-item">
-            <div class="icon-circle"><i class="bi bi-bell-fill"></i></div>
+            <div class="icon-circle bg-alert">
+              <i class="bi bi-bell-fill"></i>
+            </div>
             <h4 class="purecounter"
-                data-purecounter-start="0"
-                data-purecounter-end="<?= $notificationCount ?>"
-                data-purecounter-duration="1">
+                data-purecounter-end="<?= $notificationCount ?>">
               <?= $notificationCount ?>
             </h4>
             <p class="box-title">Alerts</p>
-            <small class="box-sub">Total notifications</small>
+            <small class="box-sub">Pending requests</small>
           </div>
         </a>
       </div>
 
-      <!-- Notifications -->
+      <!-- Members Directory -->
       <div class="col-6 col-lg-3" data-aos="fade-up">
         <a href="Members_Directory.php" class="text-decoration-none">
           <div class="pricing-item">
-            <div class="icon-circle"><i class="bi bi-bell-fill"></i></div>
-            <h4 class="purecounter"
-                data-purecounter-start="0"
-                data-purecounter-end="<?= $notificationCount ?>"
-                data-purecounter-duration="1">
-              <?= $notificationCount ?>
-            </h4>
-            <p class="box-title">Members Directory</p>
-            <small class="box-sub">Total notifications</small>
+            <div class="icon-circle bg-directory">
+              <i class="bi bi-journal-text"></i>
+            </div>
+            <h4>📂</h4>
+            <p class="box-title">Directory</p>
+            <small class="box-sub">Village contacts</small>
           </div>
         </a>
       </div>
 
-       <!-- Notifications -->
+      <!-- Contacts -->
       <div class="col-6 col-lg-3" data-aos="fade-up">
         <a href="contact.php" class="text-decoration-none">
           <div class="pricing-item">
-            <div class="icon-circle"><i class="bi bi-bell-fill"></i></div>
-            <h4 class="purecounter"
-                data-purecounter-start="0"
-                data-purecounter-end="<?= $notificationCount ?>"
-                data-purecounter-duration="1">
-              <?= $notificationCount ?>
-            </h4>
+            <div class="icon-circle bg-contact">
+              <i class="bi bi-telephone-fill"></i>
+            </div>
+            <h4>☎️</h4>
             <p class="box-title">Contacts</p>
-            <small class="box-sub">Total notifications</small>
+            <small class="box-sub">Emergency & help</small>
           </div>
         </a>
       </div>
 
+    </div>
+  </div>
+</section>
 
 
-<?php include 'footer.php'; ?>
+
+
+
 
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="assets/vendor/aos/aos.js"></script>
@@ -241,7 +259,8 @@ $notificationCount = $conn->query("
 <script>
   AOS.init();
   new PureCounter();
-</script>
+</script><?php include 'footer.php'; ?>
+
 
 
 </body>

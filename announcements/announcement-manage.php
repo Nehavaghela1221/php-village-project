@@ -13,40 +13,43 @@ $data = $conn->query("SELECT * FROM announcements ORDER BY created_at DESC");
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Announcement Manager</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Devinapura</title>
+
+  <!-- Favicons -->
+  <link href="/devinapura/assets/img/favicon.png" rel="icon">
+  <link href="/devinapura/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins&family=Raleway&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS -->
+  <link href="/devinapura/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/devinapura/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/devinapura/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/devinapura/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="/devinapura/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS -->
+  <link href="/devinapura/assets/css/main.css" rel="stylesheet">
+
+
 
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background: #f5f7fb;
-  padding: 30px;
-}
 
-h2 {
-  text-align: center;
-  margin-bottom: 10px;
-}
+
+
 
 /* TOP BAR */
-.admin-topbar {
-  text-align: right;
-  margin-bottom: 15px;
-}
 
-.logout-btn {
-  padding: 8px 16px;
-  background: #e53935;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 600;
-}
 
-.logout-btn:hover {
-  background: #d32f2f;
-}
+
 
 /* FORM */
 form {
@@ -135,17 +138,65 @@ button {
 
 .actions .delete {
   color: #e53935;
+}/* SUCCESS MODAL */
+.success-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
 }
+
+.success-box{
+  background:#fff;
+  padding:30px;
+  border-radius:18px;
+  text-align:center;
+  width:90%;
+  max-width:320px;
+  box-shadow:0 15px 40px rgba(0,0,0,.25);
+  animation:scaleIn .3s ease;
+}
+
+@keyframes scaleIn{
+  from{transform:scale(.8);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+.success-icon{
+  font-size:42px;
+  margin-bottom:10px;
+}
+
+.success-box h3{
+  margin:10px 0 20px;
+  color:#2E7D32;
+}
+
+.success-box button{
+  background:#4CAF50;
+  color:#fff;
+  border:none;
+  padding:10px 22px;
+  border-radius:20px;
+  cursor:pointer;
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="admin-topbar">
-  <a href="http://localhost/devinapura/admin/logout.php
-" class="logout-btn">🚪 Logout</a>
-</div>
 
+<!-- ================= ADMIN NAVBAR ================= -->
+<div class="admin-navbar">
+  <div class="admin-navbar-inner">
+    <h2>📸 Gallery Admin</h2>
+    <a href="http://localhost/devinapura/admin/logout.php" class="exit-btn">Exit Admin</a>
+  </div>
+</div>
 <h2>Add Announcement</h2>
 
 <form method="POST" action="announcement-save.php">
@@ -175,11 +226,8 @@ button {
     <div class="actions">
       <a class="edit" href="announcement-edit.php?id=<?php echo $row['id']; ?>">✏️ Edit</a>
       |
-      <a class="delete"
-         href="announcement-delete.php?id=<?php echo $row['id']; ?>"
-         onclick="return confirm('Delete this announcement?')">
-         🗑 Delete
-      </a>
+      <a href="#" class="delete" onclick="confirmDelete(<?= $row['id'] ?>)">🗑 Delete</a>
+
     </div>
 
   </div>
@@ -201,6 +249,58 @@ function checkExpiry() {
 checkExpiry();
 setInterval(checkExpiry, 10000);
 </script>
+<!-- SUCCESS MODAL -->
+<div id="successModal" class="success-overlay">
+  <div class="success-box">
+    <div class="success-icon">✅</div>
+    <h3 id="successText">Announcement Saved</h3>
+    <button onclick="closeSuccess()">OK</button>
+  </div>
+</div>
+<script>
+function closeSuccess(){
+  document.getElementById("successModal").style.display="none";
+}
+
+const params = new URLSearchParams(window.location.search);
+if(params.get("success")){
+  document.getElementById("successModal").style.display="flex";
+  document.getElementById("successText").innerText =
+    params.get("success")==="updated"
+    ? "Announcement Updated Successfully"
+    : "Announcement Added Successfully";
+}
+</script>
+<!-- DELETE MODAL -->
+<div id="deleteModal" class="success-overlay">
+  <div class="success-box">
+    <div class="success-icon">⚠️</div>
+    <h3>Delete Announcement?</h3>
+    <p style="font-size:14px;color:#555">This action cannot be undone</p>
+
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:15px">
+      <button style="background:#ccc;color:#000" onclick="closeDelete()">Cancel</button>
+      <button style="background:#e53935" onclick="doDelete()">Delete</button>
+    </div>
+  </div>
+</div>
+<script>
+let deleteId = null;
+
+function confirmDelete(id){
+  deleteId = id;
+  document.getElementById("deleteModal").style.display="flex";
+}
+
+function closeDelete(){
+  document.getElementById("deleteModal").style.display="none";
+}
+
+function doDelete(){
+  window.location.href = "announcement-delete.php?id=" + deleteId;
+}
+</script>
 
 </body>
 </html>
+  

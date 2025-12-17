@@ -208,7 +208,6 @@ while ($row = $res->fetch_assoc()) {
   </div>
 </div>
 
-<?php include 'footer.php'; ?>
 
 <!-- ================= JS ================= -->
 <script>
@@ -248,6 +247,8 @@ function showModal(id) {
   }, 1800);
 }
 </script>
+
+<?php include $_SERVER['DOCUMENT_ROOT'].'/devinapura/footer.php'; ?>
 
 </body>
 </html>

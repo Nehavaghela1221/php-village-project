@@ -100,6 +100,7 @@ if (isset($_GET['search'])) {
 
 </div>
 
-<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</script><?php include $_SERVER['DOCUMENT_ROOT'].'/devinapura/footer.php'; ?>
+
 </body>
 </html>

@@ -24,48 +24,65 @@
   <link href="/devinapura/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="/devinapura/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-  <!-- Main CSS (FIXED) -->
+  <!-- Main CSS -->
   <link href="/devinapura/assets/css/main.css" rel="stylesheet">
 </head>
 
 <body class="starter-page-page">
 
-
-    <!-- NAV -->
-    <header id="header" class="header d-flex align-items-center sticky-top">
+<!-- ================= HEADER / NAVBAR ================= -->
+<header id="header" class="header d-flex align-items-center sticky-top">
   <div class="container-fluid container-xl d-flex align-items-center">
 
-    <a href="index.php" class="logo d-flex align-items-center me-auto">
+    <!-- LOGO -->
+    <a href="/devinapura/index.php" class="logo d-flex align-items-center me-auto">
       <h1 class="sitename">Devinapura</h1>
     </a>
 
+    <!-- NAV MENU -->
     <nav id="navmenu" class="navmenu">
       <ul>
-        <li><a href="index.php" class="active">Dashboard</a></li>
-        <li><a href="members_list.php">Members List</a></li>
-        <li><a href="gallery.php">Gallery</a></li>
+        <li>
+          <a href="/devinapura/index.php" class="active">Dashboard</a>
+        </li>
 
+        <li>
+          <a href="/devinapura/members_list.php">Members List</a>
+        </li>
+
+        <li>
+          <a href="/devinapura/gallery.php">Gallery</a>
+        </li>
+
+        <!-- DROPDOWN -->
         <li class="dropdown">
-          <a href="#"><span>More</span>
+          <a href="#">
+            <span>More</span>
             <i class="bi bi-chevron-down toggle-dropdown"></i>
           </a>
           <ul>
-            <li><a href="announcements/announcement-user.php">Announcement</a></li>
-            <li><a href="announcements/besnu.php">Besnu</a></li>
+            <li>
+              <a href="/devinapura/announcements/announcement-user.php">
+                Announcement
+              </a>
+            </li>
+            <li>
+              <a href="/devinapura/announcements/besnu.php">
+                Besnu
+              </a>
+            </li>
           </ul>
         </li>
 
-        <li><a href="contact.php">Contact</a></li>
+        <li>
+          <a href="/devinapura/contact.php">Contact</a>
+        </li>
       </ul>
 
-      <!-- THIS IS REQUIRED -->
+      <!-- MOBILE NAV TOGGLE (REQUIRED) -->
       <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
     </nav>
 
   </div>
 </header>
-
-
-  </div>
-
-</header>
+<!-- ================= END HEADER ================= -->
