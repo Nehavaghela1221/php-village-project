@@ -3,24 +3,16 @@ require 'admin/auth.php';
 require 'config/db.php';
 $msg = "";
 
-/* ===== AUTO INCREMENT FIX ===== */
-$res = $conn->query("SELECT MAX(id) as maxid FROM members");
+/* ===== NEXT AUTO ID (DISPLAY ONLY) ===== */
+$res = $conn->query("SELECT MAX(id) AS maxid FROM members");
 $row = $res->fetch_assoc();
-$next = ($row['maxid'] ?? 0) + 1;
-$conn->query("ALTER TABLE members AUTO_INCREMENT = $next");
+$next_id = ($row['maxid'] ?? 0) + 1;
 
 /* ===== CREATE UPLOAD FOLDER ===== */
 if (!is_dir("uploads")) {
     mkdir("uploads", 0777, true);
 }
 
-/* ===== AUTO SERIAL NUMBER ===== */
-$next_serial = "0001";
-$res = $conn->query("SELECT serial_no FROM members ORDER BY id DESC LIMIT 1");
-if ($res && $res->num_rows > 0) {
-    $row = $res->fetch_assoc();
-    $next_serial = str_pad((int)$row['serial_no'] + 1, 4, "0", STR_PAD_LEFT);
-}
 
 /* ===== FORM SUBMIT ===== */
 if (isset($_POST['submit'])) {
@@ -45,11 +37,11 @@ if (isset($_POST['submit'])) {
         $msg = "Phone number must be 10 digits";
     } else {
 
-        /* PHOTO */
+        /* PHOTO UPLOAD */
         $photo = $_FILES['photo']['name'];
-        $tmp = $_FILES['photo']['tmp_name'];
-        $size = $_FILES['photo']['size'];
-        $ext = strtolower(pathinfo($photo, PATHINFO_EXTENSION));
+        $tmp   = $_FILES['photo']['tmp_name'];
+        $size  = $_FILES['photo']['size'];
+        $ext   = strtolower(pathinfo($photo, PATHINFO_EXTENSION));
 
         if (!in_array($ext, ['jpg','jpeg','png','webp'])) {
             $msg = "Only JPG, PNG, WEBP allowed";
@@ -62,7 +54,7 @@ if (isset($_POST['submit'])) {
             if (move_uploaded_file($tmp, "uploads/".$new_photo)) {
 
                 $sql = "INSERT INTO members
-                (serial_no, photo, full_name, dob,  address, area, city, phone, shakh, samaj, family_no, marriage_status, occupation, business_address)
+                (serial_no, photo, full_name, dob, address, area, city, phone, shakh, samaj, family_no, marriage_status, occupation, business_address)
                 VALUES
                 ('$serial_no','$new_photo','$full_name','$dob','$address','$area','$city','$phone','$shakh','$samaj','$family_no','$marriage_status','$occupation','$business_address')";
 
@@ -91,7 +83,6 @@ if (isset($_POST['submit'])) {
 <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <link href="/devinapura/assets/css/main.css" rel="stylesheet">
-
 </head>
 
 <body>
@@ -114,14 +105,30 @@ if (isset($_POST['submit'])) {
 <div class="card-body p-4">
 
 <form method="post" enctype="multipart/form-data" id="memberForm">
+   <div class="col-md-4">
+    <label class="form-label">Member ID</label>
+    <input type="text" value="<?= $next_id ?>" class="form-control" readonly>
+  </div>
 
 <!-- BASIC INFO -->
 <div class="section-title">Basic Information</div>
 <div class="row g-3">
-  <div class="col-md-4">
-    <label class="form-label">Serial No</label>
-    <input type="text" name="serial_no" value="<?= $next_serial ?>" class="form-control" readonly>
-  </div>
+ <div class="col-md-4">
+  <label class="form-label">Serial Number *</label>
+  <input type="text"
+         name="serial_no"
+         class="form-control"
+         placeholder="Enter 4 Digit Serial (e.g. 0001)"
+         maxlength="4"
+         pattern="\d{4}"
+         title="Serial number must be exactly 4 digits"
+         required>
+</div>
+<script>
+document.querySelector('[name="serial_no"]').addEventListener('input', function () {
+    this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4);
+});
+</script>
 
   <div class="col-md-8">
     <label class="form-label">Full Name *</label>
